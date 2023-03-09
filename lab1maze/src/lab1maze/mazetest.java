@@ -63,8 +63,9 @@ public class mazetest {
 		showMatrix(maze,row,col);
 		
 //		showMatriz;
-		// Dani huele peste 
+		// Dani no huele
 		// eo eo oe
+		//esto es una prueba
 		
 	}
 
