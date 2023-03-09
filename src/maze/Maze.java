@@ -9,12 +9,12 @@ public class Maze {
 	
 	public Maze() {
 		maze = new char[ROWS][COLS];    //Maze matrix
-	}                                   //-----------//
-                                        // Symbols meaning:
-	public void generateMaze() {        // ' ' -> free gap
+	}                                       //-----------//
+                                                // Symbols meaning:
+	public void generateMaze() {            // ' ' -> free gap
 		generateObstacles();            // '#' -> obstacle
 		generateMainStates();           // 'I' -> Initial state
-	}                                   // 'G' -> Goal state
+	}                                       // 'G' -> Goal state
 	
 	private void generateObstacles() {
 		float obstacles = (PERC_OBS/100)*ROWS*COLS;
