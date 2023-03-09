@@ -63,6 +63,7 @@ public class mazetest {
 		showMatrix(maze,row,col);
 		
 //		showMatriz;
+		// Dani huele peste
 		
 	}
 
