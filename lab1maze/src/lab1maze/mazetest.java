@@ -62,10 +62,7 @@ public class mazetest {
 		createMatrix(maze,row,col,percObs);
 		showMatrix(maze,row,col);
 		
-//		showMatriz;
-		// Dani no huele
-		// eo eo oe
-		//esto es una prueba
+
 		
 	}
 
