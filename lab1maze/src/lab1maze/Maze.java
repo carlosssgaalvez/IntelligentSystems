@@ -12,7 +12,7 @@ public class Maze {
 		maze = new char[row][col];    //Maze matrix
 	}
 	
-	public void createMatrix() {
+	public void createMatrix() { //llamamos a las funciones de dentro para crear todos los elementos de la matrix
 		setG();
 		setI();
 		setObs();
@@ -58,19 +58,19 @@ public class Maze {
 		}
 	}
 	
-	private int numRandom(int n) {  // metodo privado para cada vez que necesitamos numero privado entre 0 y n
+	private int numRandom(int n) {  // metodo privado para cada vez que necesitamos numero aleatorio entre 0 y n
 		Random aleatorio = new Random();
 		int nRandom = aleatorio.nextInt(n);
 		return nRandom;
 		}
 	
-	public void showMatrix() {
+	public void showMatrix() {  //mostramos matrix
 		for(int i=0;i<row;i++) {
 			for(int j=0;j<col;j++) {
 				System.out.print(maze[i][j]);	
 				
 			}
-			System.out.print("\n");
+			System.out.print("\n");  //salto de linea por cada fila terminada
 		}
 	}
 }
