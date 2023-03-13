@@ -1,7 +1,5 @@
 package lab1maze;
 
-import java.util.Random;
-
 public class Maze {
 	private final int row = 60;
 	private final int col = 80;	
