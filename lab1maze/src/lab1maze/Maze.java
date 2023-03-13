@@ -59,10 +59,9 @@ public class Maze {
 	}
 	
 	private int numRandom(int n) {  // metodo privado para cada vez que necesitamos numero aleatorio entre 0 y n
-		Random aleatorio = new Random();
-		int nRandom = aleatorio.nextInt(n);
+		int nRandom = (int)Math.floor(Math.random()*n);
 		return nRandom;
-		}
+	}
 	
 	public void showMatrix() {  //mostramos matrix
 		for(int i=0;i<row;i++) {
