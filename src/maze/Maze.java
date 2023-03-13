@@ -13,26 +13,28 @@ public class Maze {
                                                 // Symbols meaning:
 	public void generateMaze() {            // ' ' -> free gap
 		generateObstacles();            // '#' -> obstacle
-		generateMainStates();           // 'I' -> Initial state
-	}                                       // 'G' -> Goal state
+		generateMainStates();// 'I' -> Initial state // 'G' -> Goal state
+		generateSpaces();
+	}                                     
 	
 	private void generateObstacles() {
 		float obstacles = (PERC_OBS/100)*ROWS*COLS;
+		int iRand,jRand;
 		while(obstacles > 0) {
-			int iRand = (int)Math.floor(Math.random()*ROWS);
-			int jRand = (int)Math.floor(Math.random()*COLS);
-			maze[iRand][jRand] = '#';
-			if(maze[iRand][jRand] == '#')	
+			iRand = (int)Math.floor(Math.random()*ROWS);
+			jRand = (int)Math.floor(Math.random()*COLS);
+			if(maze[iRand][jRand] != '#')
+				maze[iRand][jRand] = '#';
 				--obstacles;
 		}
 	}
 	
 	private void generateMainStates() {
-		boolean setI = false;
-		boolean setG = false;
+		boolean setI = false,setG = false;
+		int iRand,jRand;
 		while(!setI || !setG) {
-			int iRand = (int)Math.floor(Math.random()*ROWS);
-			int jRand = (int)Math.floor(Math.random()*COLS);
+			iRand = (int)Math.floor(Math.random()*ROWS);
+			jRand = (int)Math.floor(Math.random()*COLS);
 			if(maze[iRand][jRand] != '#') {
 				if(!setI && maze[iRand][jRand] != 'G') {
 					maze[iRand][jRand] = 'I';
@@ -42,6 +44,14 @@ public class Maze {
 					setG = true;
 				}
 			}
+		}
+	}
+	private void generateSpaces() {
+		for(int i = 0; i < ROWS; ++i) {
+			for(int j = 0; j < COLS; ++j) 
+				if(maze[i][j]!='G' && maze[i][j]!='I' && maze[i][j]!='#') {
+					maze[i][j]=' ';
+				}
 		}
 	}
 	
