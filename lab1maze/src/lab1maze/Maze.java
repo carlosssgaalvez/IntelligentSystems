@@ -81,6 +81,6 @@ public class Maze {
 	}
 	
 	public void implementarAlgoritmo() {
-		double distancia = abs(inirow-goalrow);
+		double distancia = Math.sqrt(Math.pow(Math.abs(inirow-goalrow),2) + Math.pow(Math.abs(inicol-goalcol),2)) ;
 	}
 }
