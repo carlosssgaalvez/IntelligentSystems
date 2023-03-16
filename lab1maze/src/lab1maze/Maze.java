@@ -1,10 +1,17 @@
 package lab1maze;
 
+import java.util.*;
+
 public class Maze {
 	private final int row = 60;
 	private final int col = 80;	
-	private final int percObs = 30; //
+	private final int percObs = 30; 
 	private char[][] maze;
+	private int goalrow;
+	private int goalcol;
+	private int inirow;
+	private int inicol;
+	
 	
 	public Maze() {
 		maze = new char[row][col];    //Maze matrix
@@ -18,13 +25,15 @@ public class Maze {
 	}
 	
 	protected void setG() { // colocamos goal
-		int goalrow =numRandom(row);
-		int goalcol= numRandom(col);
+		
+		this.goalrow =numRandom(row);
+		goalcol= numRandom(col);
 		maze[goalrow][goalcol]='G';
+		
+		
 	}
 	
 	protected void setI() { //colocamos I
-		int inirow,inicol;
 		do {
 			inirow =numRandom(row);
 			inicol= numRandom(col);
@@ -69,5 +78,9 @@ public class Maze {
 			}
 			System.out.print("\n");  //salto de linea por cada fila terminada
 		}
+	}
+	
+	public void implementarAlgoritmo() {
+		double distancia = abs(inirow-goalrow);
 	}
 }
