@@ -14,7 +14,8 @@ public class Maze {
 	public void generateMaze() {        // ' ' -> free gap
 		generateObstacles();            // '#' -> obstacle
 		generateMainStates();           // 'I' -> Initial state
-	}                                   // 'G' -> Goal state
+		generateSpaces();               // 'G' -> Goal state
+	}                                   
 	
 	private void generateObstacles() {
 		float obstacles = (PERC_OBS/100)*ROWS*COLS;
@@ -44,6 +45,15 @@ public class Maze {
 					maze[iRand][jRand] = 'G';
 					setG = true;
 				}
+			}
+		}
+	}
+	
+	private void generateSpaces() {
+		for(int i = 0; i < ROWS; ++i) {
+			for(int j = 0; j < COLS; ++j) {
+				if(maze[i][j] != 'I' && maze[i][j] != 'G' && maze[i][j] != '#')
+					maze[i][j] = ' ';
 			}
 		}
 	}
