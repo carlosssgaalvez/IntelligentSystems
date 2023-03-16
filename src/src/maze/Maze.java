@@ -46,12 +46,13 @@ public class Maze {
 			}
 		}
 	}
+	
 	private void generateSpaces() {
 		for(int i = 0; i < ROWS; ++i) {
-			for(int j = 0; j < COLS; ++j) 
-				if(maze[i][j]!='G' && maze[i][j]!='I' && maze[i][j]!='#') {
-					maze[i][j]=' ';
-				}
+			for(int j = 0; j < COLS; ++j) {
+				if(maze[i][j] != 'I' && maze[i][j] != 'G' && maze[i][j] != '#')
+					maze[i][j] = ' ';
+			}
 		}
 	}
 	
