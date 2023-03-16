@@ -8,7 +8,7 @@ public class TestMaze {
 		
 		maze.generateMaze();
 		maze.printMaze();
-
+		
 	}
 
 }

@@ -2,10 +2,10 @@ package maze;
 
 public class Maze {
 	
-	private final int ROWS = 60;
-	private final int COLS = 80;	
+	protected final int ROWS = 60;
+	protected final int COLS = 80;	
 	private final float PERC_OBS = 30;
-	private char[][] maze;
+	protected char[][] maze;
 	
 	public Maze() {
 		maze = new char[ROWS][COLS];    //Maze matrix
