@@ -3,7 +3,7 @@ package lab1maze;
 public class Maze {
 	private final int row = 60;
 	private final int col = 80;	
-	private final int percObs = 30;
+	private final int percObs = 30; //
 	private char[][] maze;
 	
 	public Maze() {
