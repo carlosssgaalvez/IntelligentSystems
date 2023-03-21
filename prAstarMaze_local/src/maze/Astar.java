@@ -16,17 +16,36 @@ public class Astar extends Maze {
 		parent = new ArrayList<>();
 	}
 	
-	public void fillClosedSet() {
+	public void fillOpenSet(Node e) {
+		
+		if(maze maze[i][j]!='#' && !closedSet.contains(e)) {
+			
+		}
+					openSet.add(e);
+				
+			
+		
+		
+	}
+	public void principal() {
 		Node e;
-		for(int i = 0; i < ROWS; ++i) {
-			for(int j = 0; j < COLS; ++j) {
-				if(maze[i][j] != ' ') {
-					if(!isSurrounded(i, j)) {
-						e = new Node(i, j);
-						closedSet.add(e);
-					}
+		int i=0,j=0;
+		while(openSet.isEmpty()) {
+			j=0;
+			while(j<COLS) {
+				if( maze[i][j]=='I') {
+					e=new Node(i,j);
+					openSet.add(e);
+					j++;
 				}
 			}
+			i++;
+		}
+				
+			
+		fillOpenSet(e);
+		while(!openSet.isEmpty()) {
+			
 		}
 	}
 	
