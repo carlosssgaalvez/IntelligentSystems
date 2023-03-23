@@ -12,6 +12,7 @@ public class TestMaze {
 		}
 		
 		System.out.println(maze.showOpenAndClose());
+		maze.showMatrix();
 
 	}
 
