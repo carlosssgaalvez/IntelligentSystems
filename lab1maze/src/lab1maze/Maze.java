@@ -102,17 +102,14 @@ public class Maze {
 			Node e = new Node(rowaux,colaux,gaux);
 			e.setF(faux);
 			closeSet.add(e);    // lo introducimos en la lista a evaluar
-			System.out.println("Added " + e + " to closeSet");
 			openSet.remove(0);  // eliminamos el que vamos a evaluar(siempre el primero ya que es el que tiene menos f
-			System.out.println("Removed " + e + " from openSet");
-			System.out.println(e.toString());
 			
 			if (maze[e.getNum_row()][e.getNum_col()] == 'G') { // comprobamos si el que evaluamos es G
 				res = true;
 			}	
 			
-
-			if (e.getNum_col()>= 0 && maze[e.getNum_row()][e.getNum_col()-1] != '#'){ //Vecino izquierdo
+			
+			if (e.getNum_col() > 0 && maze[e.getNum_row()][e.getNum_col()-1] != '#'){ //Vecino izquierdo
 				Node s1 = new Node(e.getNum_row(),e.getNum_col()-1, e.getG()+1);
 				s1.setF(calculateF(s1));
 				if (notInClose(s1) == true && notInOpen(s1) == true) { //comprobamos que no este en ninguna de las lista para no volvera añadirlo
@@ -120,9 +117,8 @@ public class Maze {
 				}
 			}
 			
-			System.out.println("okkkk");
 				
-			if (e.getNum_row()>= 0 && maze[e.getNum_row()-1][e.getNum_col()] != '#'){ //vecino arriba
+			if (e.getNum_row() > 0 && maze[e.getNum_row()-1][e.getNum_col()] != '#'){ //vecino arriba
 				Node s2 = new Node(e.getNum_row()-1,e.getNum_col(), e.getG()+1);
 				s2.setF(calculateF(s2));
 				if (notInClose(s2) == true && notInOpen(s2) == true) {
@@ -130,9 +126,8 @@ public class Maze {
 				}
 			}
 			
-			System.out.println("okkkk");
 				
-			if (e.getNum_row() <= this.col && maze[e.getNum_row()][e.getNum_col()+1] != '#'){ //vecino derecha
+			if (e.getNum_row() < this.col && maze[e.getNum_row()][e.getNum_col()+1] != '#'){ //vecino derecha
 				Node s3 = new Node(e.getNum_row(),e.getNum_col()+1, e.getG()+1);
 				s3.setF(calculateF(s3));
 				if (notInClose(s3) == true && notInOpen(s3) == true) {
@@ -140,9 +135,8 @@ public class Maze {
 				}
 			}
 			
-			System.out.println("okkkk");
 
-			if (e.getNum_row() <= this.row && maze[e.getNum_row()+1][e.getNum_col()] != '#'){ //vecino abajo
+			if (e.getNum_row() < this.row && maze[e.getNum_row()+1][e.getNum_col()] != '#'){ //vecino abajo
 				Node s4 = new Node(e.getNum_row()+1,e.getNum_col(), e.getG()+1);
 				s4.setF(calculateF(s4));
 				if (notInClose(s4) == true && notInOpen(s4) == true) {
@@ -150,12 +144,12 @@ public class Maze {
 				}
 			}
 			
-			System.out.println("okkkk");
-			
-			colaux = openSet.get(0).getNum_col();   //cambiamos variables  auxiliares para evaluar un Nodo distinto en cada iteración
-			rowaux = openSet.get(0).getNum_row();
-			gaux = openSet.get(0).getG();
-			faux = openSet.get(0).getF();
+			if(!openSet.isEmpty()) {  // evitamos index out of bounds
+				colaux = openSet.get(0).getNum_col();   //cambiamos variables  auxiliares para evaluar un Nodo distinto en cada iteración
+				rowaux = openSet.get(0).getNum_row();
+				gaux = openSet.get(0).getG();
+				faux = openSet.get(0).getF();
+			}			
 	
 		}
 		return res;
@@ -164,11 +158,10 @@ public class Maze {
 	public void addOpenSet(Node e) {  // añadimos al openSet 
 		boolean introducido = false;
 		int i = 0;
-		e.setF(calculateF(e)); // calculamos y establecemos F, openSet se organiza por esta variable (menor a mayor)
-		if (openSet.size()== 0) {
+		if (openSet.isEmpty()) {
 			openSet.add(e);
 		} else {
-			while(introducido == false && i <= openSet.size()) {
+			while(introducido == false && i < openSet.size()) {
 				if(openSet.get(i).getF() > e.getF()) {
 					openSet.add(i, e);
 					introducido = true;
@@ -190,6 +183,7 @@ public class Maze {
 			if (e.getNum_col() == closeSet.get(i).getNum_col() && e.getNum_row() == closeSet.get(i).getNum_row()) {
 				ev = false;
 			}
+			i++;
 		}
 		return ev;
 	}
@@ -201,6 +195,7 @@ public class Maze {
 			if (e.getNum_col() == openSet.get(i).getNum_col() && e.getNum_row() == openSet.get(i).getNum_row()) {
 				ev = false;
 			}
+			i++;
 		}
 		return ev;
 	}

@@ -11,7 +11,6 @@ public class TestMaze {
 			System.out.println("No tiene solucion");
 		}
 		
-		System.out.println("sal de bucle");
 		System.out.println(maze.showOpenAndClose());
 
 	}
