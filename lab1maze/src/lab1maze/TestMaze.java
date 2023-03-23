@@ -4,9 +4,15 @@ public class TestMaze {
 
 	public static void main(String[] args) {
 		Maze maze = new Maze();
-		
-		maze.createMatrix();;
 		maze.showMatrix();
+		if (maze.haveSolution() == true) {
+			System.out.println("tiene solucion");
+		} else {
+			System.out.println("No tiene solucion");
+		}
+		
+		System.out.println("sal de bucle");
+		System.out.println(maze.showOpenAndClose());
 
 	}
 

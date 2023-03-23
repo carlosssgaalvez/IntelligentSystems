@@ -7,6 +7,10 @@ public class Maze {
 	private final int col = 80;	
 	private final int percObs = 30; 
 	private char[][] maze;
+	
+	private List<Node> closeSet;
+	private List<Node> openSet;
+	
 	private int goalrow;
 	private int goalcol;
 	private int inirow;
@@ -15,6 +19,9 @@ public class Maze {
 	
 	public Maze() {
 		maze = new char[row][col];    //Maze matrix
+		createMatrix();
+		closeSet = new ArrayList<>(); //explorados
+		openSet = new ArrayList<>(); //para explorar
 	}
 	
 	public void createMatrix() { //llamamos a las funciones de dentro para crear todos los elementos de la matrix
@@ -79,8 +86,139 @@ public class Maze {
 			System.out.print("\n");  //salto de linea por cada fila terminada
 		}
 	}
+
+//****************** PARTE DE ALGORITMO *******************************
 	
-	public void implementarAlgoritmo() {
-		double distancia = Math.sqrt(Math.pow(Math.abs(inirow-goalrow),2) + Math.pow(Math.abs(inicol-goalcol),2)) ;
+	public boolean haveSolution() {
+		boolean res = false;  //sabremos si tiene solucion o no
+		Node i = new Node(inirow,inicol,0); //creamos nodo del que partimos
+		i.setF(calculateF(i));  // añadiendole F
+		openSet.add(i);			// añadimos al arrayList que vamos a evaluar
+		int rowaux = i.getNum_row();
+		int colaux = i.getNum_col();
+		int gaux = i.getG();
+		double faux = i.getF();
+		while(res == false && !openSet.isEmpty()) { //mientras que no encontremos respuesta o no tengamos elementos para evaluar
+			Node e = new Node(rowaux,colaux,gaux);
+			e.setF(faux);
+			closeSet.add(e);    // lo introducimos en la lista a evaluar
+			System.out.println("Added " + e + " to closeSet");
+			openSet.remove(0);  // eliminamos el que vamos a evaluar(siempre el primero ya que es el que tiene menos f
+			System.out.println("Removed " + e + " from openSet");
+			System.out.println(e.toString());
+			
+			if (maze[e.getNum_row()][e.getNum_col()] == 'G') { // comprobamos si el que evaluamos es G
+				res = true;
+			}	
+			
+
+			if (e.getNum_col()>= 0 && maze[e.getNum_row()][e.getNum_col()-1] != '#'){ //Vecino izquierdo
+				Node s1 = new Node(e.getNum_row(),e.getNum_col()-1, e.getG()+1);
+				s1.setF(calculateF(s1));
+				if (notInClose(s1) == true && notInOpen(s1) == true) { //comprobamos que no este en ninguna de las lista para no volvera añadirlo
+					addOpenSet(s1);
+				}
+			}
+			
+			System.out.println("okkkk");
+				
+			if (e.getNum_row()>= 0 && maze[e.getNum_row()-1][e.getNum_col()] != '#'){ //vecino arriba
+				Node s2 = new Node(e.getNum_row()-1,e.getNum_col(), e.getG()+1);
+				s2.setF(calculateF(s2));
+				if (notInClose(s2) == true && notInOpen(s2) == true) {
+					addOpenSet(s2);
+				}
+			}
+			
+			System.out.println("okkkk");
+				
+			if (e.getNum_row() <= this.col && maze[e.getNum_row()][e.getNum_col()+1] != '#'){ //vecino derecha
+				Node s3 = new Node(e.getNum_row(),e.getNum_col()+1, e.getG()+1);
+				s3.setF(calculateF(s3));
+				if (notInClose(s3) == true && notInOpen(s3) == true) {
+					addOpenSet(s3);
+				}
+			}
+			
+			System.out.println("okkkk");
+
+			if (e.getNum_row() <= this.row && maze[e.getNum_row()+1][e.getNum_col()] != '#'){ //vecino abajo
+				Node s4 = new Node(e.getNum_row()+1,e.getNum_col(), e.getG()+1);
+				s4.setF(calculateF(s4));
+				if (notInClose(s4) == true && notInOpen(s4) == true) {
+					addOpenSet(s4);
+				}
+			}
+			
+			System.out.println("okkkk");
+			
+			colaux = openSet.get(0).getNum_col();   //cambiamos variables  auxiliares para evaluar un Nodo distinto en cada iteración
+			rowaux = openSet.get(0).getNum_row();
+			gaux = openSet.get(0).getG();
+			faux = openSet.get(0).getF();
+	
+		}
+		return res;
 	}
+		
+	public void addOpenSet(Node e) {  // añadimos al openSet 
+		boolean introducido = false;
+		int i = 0;
+		e.setF(calculateF(e)); // calculamos y establecemos F, openSet se organiza por esta variable (menor a mayor)
+		if (openSet.size()== 0) {
+			openSet.add(e);
+		} else {
+			while(introducido == false && i <= openSet.size()) {
+				if(openSet.get(i).getF() > e.getF()) {
+					openSet.add(i, e);
+					introducido = true;
+				}
+				i++;
+			}
+		}
+	}
+	
+	public double calculateF(Node e) {
+		double distancia = Math.sqrt(Math.pow(Math.abs(goalrow-e.getNum_row()),2) + Math.pow(Math.abs(goalcol-e.getNum_col()),2));
+		return distancia + e.getG();
+	}
+	
+	public boolean notInClose (Node e) {
+		boolean ev = true;
+		int i = 0;
+		while (ev == true && i < closeSet.size()) {
+			if (e.getNum_col() == closeSet.get(i).getNum_col() && e.getNum_row() == closeSet.get(i).getNum_row()) {
+				ev = false;
+			}
+		}
+		return ev;
+	}
+	
+	public boolean notInOpen (Node e) {
+		boolean ev = true;
+		int i = 0;
+		while (ev == true && i < openSet.size()) {
+			if (e.getNum_col() == openSet.get(i).getNum_col() && e.getNum_row() == openSet.get(i).getNum_row()) {
+				ev = false;
+			}
+		}
+		return ev;
+	}
+	
+	public String showOpenAndClose() {
+		String o = openSet.toString();
+		String c = closeSet.toString();
+		return "open: " + o + "\n" + "close: " + c;
+	}
+	
+/*	public void prueba() {
+	    for (int i = 0; i < 10; i++) {
+	        Node e = new Node(i * 10, i * 20, i);
+	        e.setG(i + 1);
+	        e.setNum_col(i * 10 + 1);
+	        e.setNum_row(i * 20 + 1);
+	        openSet.add(e);
+	    }
+	}*/
+
 }
