@@ -3,8 +3,8 @@ package lab1maze;
 import java.util.*;
 
 public class Maze {
-	private final int row = 60;
-	private final int col = 80;	
+	private final int row = 10;
+	private final int col = 20;	
 	private final int percObs = 30; 
 	private char[][] maze;
 	
@@ -127,7 +127,7 @@ public class Maze {
 			}
 			
 				
-			if (e.getNum_row() < this.col && maze[e.getNum_row()][e.getNum_col()+1] != '#'){ //vecino derecha
+			if (e.getNum_row() < this.col-1 && maze[e.getNum_row()][e.getNum_col()+1] != '#'){ //vecino derecha
 				Node s3 = new Node(e.getNum_row(),e.getNum_col()+1, e.getG()+1);
 				s3.setF(calculateF(s3));
 				if (notInClose(s3) == true && notInOpen(s3) == true) {
@@ -136,7 +136,7 @@ public class Maze {
 			}
 			
 
-			if (e.getNum_row() < this.row && maze[e.getNum_row()+1][e.getNum_col()] != '#'){ //vecino abajo
+			if (e.getNum_row() < this.row-1 && maze[e.getNum_row()+1][e.getNum_col()] != '#'){ //vecino abajo
 				Node s4 = new Node(e.getNum_row()+1,e.getNum_col(), e.getG()+1);
 				s4.setF(calculateF(s4));
 				if (notInClose(s4) == true && notInOpen(s4) == true) {
