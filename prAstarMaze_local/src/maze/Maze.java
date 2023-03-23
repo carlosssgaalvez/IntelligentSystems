@@ -5,10 +5,14 @@ public class Maze {
 	protected final int ROWS = 60;
 	protected final int COLS = 80;	
 	private final float PERC_OBS = 30;
+	private int rowI;
+	private int colI;
+	private int rowG;
+	private int colG;
 	protected char[][] maze;
 	
 	public Maze() {
-		maze = new char[ROWS][COLS];    //Maze matrix
+		maze = new char[ROWS][COLS];//Maze matrix
 	}                                   //-----------//
                                         // Symbols meaning:
 	public void generateMaze() {        // ' ' -> free gap
@@ -40,6 +44,8 @@ public class Maze {
 			if(maze[iRand][jRand] != '#') {
 				if(!setI && maze[iRand][jRand] != 'G') {
 					maze[iRand][jRand] = 'I';
+					rowI=iRand;
+					colI=jRand;
 					setI = true;
 				} else if(!setG && maze[iRand][jRand] != 'I') {
 					maze[iRand][jRand] = 'G';
@@ -49,6 +55,18 @@ public class Maze {
 		}
 	}
 	
+	public int  getRowI() {
+		return rowI;
+	}
+	public int  getColI() {
+		return colI;
+	}
+	public int  getRowG() {
+		return rowG;
+	}
+	public int  getColG() {
+		return colG;
+	}
 	private void generateSpaces() {
 		for(int i = 0; i < ROWS; ++i) {
 			for(int j = 0; j < COLS; ++j) {
