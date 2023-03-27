@@ -2,39 +2,33 @@ package maze;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Astar extends Maze {
 	
-	private List<Node> closedSet;
-	private List<Node> openSet;
+	private Set<Node> closedSet;
+	private Set<Node> openSet;
 	private Map<Node,Integer> parent;
 
 	
 	public Astar() {
 		super();
-		closedSet = new ArrayList<>();
-		openSet = new ArrayList<>();
+		closedSet = new HashSet<>();
+		openSet = new HashSet<>();
 		parent = new HashMap<>();
 	}
 	
 	
 
-	public void addOpenSet(Node e) {  // añadimos al openSet 
-		boolean introducido = false;
-		int i = 0;
-		if (openSet.isEmpty()) {
-			openSet.add(e);
-		} else {
-			while(introducido == false && i < openSet.size()) {
-				if(openSet.get(i).getF() > e.getF()) {
-					openSet.add(i, e);
-					introducido = true;
-				}
-				i++;
-			}
-		}
+	public void addOpenSet(Node e) {
+	    if (openSet.isEmpty()) {
+	        openSet.add(e);
+	    } else {
+	        openSet.add(e);
+	    }
 	}
 	
 	public boolean isGoal(Node e) {
