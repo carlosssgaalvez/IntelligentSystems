@@ -1,5 +1,7 @@
 package maze;
 
+import java.util.Random;
+
 public class Maze {
 	
 	protected final int ROWS = 60;
@@ -12,15 +14,16 @@ public class Maze {
 	protected char[][] maze;
 	
 	public Maze() {
-		maze = new char[ROWS][COLS];//Maze matrix
+		maze = new char[ROWS][COLS];	//Maze matrix
 	}                                   //-----------//
                                         // Symbols meaning:
-	public void generateMaze() {        // ' ' -> free gap
+	public void generateMaze() { 
+										// ' ' -> free gap
 		generateObstacles();            // '#' -> obstacle
 		generateMainStates();           // 'I' -> Initial state
 		generateSpaces();               // 'G' -> Goal state
 	}                                   
-	
+	//Configure the Obstacles(#)
 	private void generateObstacles() {
 		float obstacles = (PERC_OBS/100)*ROWS*COLS;
 		int iRand, jRand;
@@ -33,40 +36,38 @@ public class Maze {
 			}
 		}
 	}
-	
+	//Configure the Initial (I) and the Goal (G) State
 	private void generateMainStates() {
-		boolean setI = false;
-		boolean setG = false;
-		int iRand, jRand;
-		while(!setI || !setG) {
-			iRand = (int)Math.floor(Math.random()*ROWS);
-			jRand = (int)Math.floor(Math.random()*COLS);
-			if(maze[iRand][jRand] != '#') {
-				if(!setI && maze[iRand][jRand] != 'G') {
-					maze[iRand][jRand] = 'I';
-					rowI=iRand;
-					colI=jRand;
-					setI = true;
-				} else if(!setG && maze[iRand][jRand] != 'I') {
-					maze[iRand][jRand] = 'G';
-					setG = true;
-				}
-			}
-		}
+		Random random= new Random();	
+		rowI = random.nextInt(ROWS);
+        colI = random.nextInt(COLS);
+        rowG = random.nextInt(ROWS);
+        colG = random.nextInt(COLS);
+        // Check that initial and goal states are not obstacles
+        if (maze[rowI][colI] == '#' || maze[rowG][colG] == '#') {
+            throw new RuntimeException("Initial or Goal state is an obstacle.");
+        }
+        // Set initial and goal states in the maze
+        maze[rowI][colI] = 'I';
+        maze[rowG][colG] = 'G';
 	}
-	
+	//Get Initial Row
 	public int  getRowI() {
 		return rowI;
 	}
+	//Get Initial Column
 	public int  getColI() {
 		return colI;
 	}
+	//Get Goal Row
 	public int  getRowG() {
 		return rowG;
 	}
+	//Get Goal Column
 	public int  getColG() {
 		return colG;
 	}
+	//Fill the rest of the matrix with spaces
 	private void generateSpaces() {
 		for(int i = 0; i < ROWS; ++i) {
 			for(int j = 0; j < COLS; ++j) {
@@ -75,7 +76,7 @@ public class Maze {
 			}
 		}
 	}
-	
+	//Show the matrix
 	public void printMaze() {
 		for(int i = 0; i < ROWS; ++i) {
 			for(int j = 0; j < COLS; ++j) 
