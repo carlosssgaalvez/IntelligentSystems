@@ -17,12 +17,12 @@ public class Maze {
 		maze = new char[ROWS][COLS];	//Maze matrix
 	}                                   //-----------//
                                         // Symbols meaning:
-	public void generateMaze() { 
-										// ' ' -> free gap
-		generateObstacles();            // '#' -> obstacle
-		generateMainStates();           // 'I' -> Initial state
-		generateSpaces();               // 'G' -> Goal state
-	}                                   
+	public void generateMaze() { 		// '+' -> Path
+		generateObstacles();			// ' ' -> free gap
+		generateMainStates();           // '#' -> obstacle
+		generateSpaces();           	// 'I' -> Initial state              
+	} 									// 'G' -> Goal state
+	
 	//Configure the Obstacles(#)
 	private void generateObstacles() {
 		float obstacles = (PERC_OBS/100)*ROWS*COLS;
@@ -36,6 +36,7 @@ public class Maze {
 			}
 		}
 	}
+	
 	//Configure the Initial (I) and the Goal (G) State
 	private void generateMainStates() {
 		Random random= new Random();	
@@ -44,29 +45,33 @@ public class Maze {
         rowG = random.nextInt(ROWS);
         colG = random.nextInt(COLS);
         // Check that initial and goal states are not obstacles
-        if (maze[rowI][colI] == '#' || maze[rowG][colG] == '#') {
+        if (maze[rowI][colI] == '#' || maze[rowG][colG] == '#')
             throw new RuntimeException("Initial or Goal state is an obstacle.");
-        }
         // Set initial and goal states in the maze
         maze[rowI][colI] = 'I';
         maze[rowG][colG] = 'G';
 	}
+	
 	//Get Initial Row
 	public int  getRowI() {
 		return rowI;
 	}
+	
 	//Get Initial Column
 	public int  getColI() {
 		return colI;
 	}
+	
 	//Get Goal Row
 	public int  getRowG() {
 		return rowG;
 	}
+	
 	//Get Goal Column
 	public int  getColG() {
 		return colG;
 	}
+	
 	//Fill the rest of the matrix with spaces
 	private void generateSpaces() {
 		for(int i = 0; i < ROWS; ++i) {
@@ -76,6 +81,7 @@ public class Maze {
 			}
 		}
 	}
+	
 	//Show the matrix
 	public void printMaze() {
 		for(int i = 0; i < ROWS; ++i) {

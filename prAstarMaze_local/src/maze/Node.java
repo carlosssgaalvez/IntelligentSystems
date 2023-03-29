@@ -1,8 +1,5 @@
 package maze;
 
-
-
-
 public class Node {
 
     private int row;
@@ -22,11 +19,10 @@ public class Node {
         this.row = row;
         this.col = col;
         this.g = g;
-        h=0;
+        h = 0;
         f = g + h;
     }
     
-
     public int getROW() {
         return row;
     }
@@ -57,5 +53,4 @@ public class Node {
         return f;
     }
 
-   
 }
