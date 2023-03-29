@@ -12,12 +12,14 @@ public class Astar extends Maze {
     private Set<Node> openSet;
     private Set<Node> closedSet;
     private Map<Node,Node> parent;
+    boolean isSolved;
 
     public Astar() {
     	super();
         openSet = new HashSet<>();   // The set of tentative nodes to be evaluated
         closedSet = new HashSet<>(); // The set of nodes already evaluated
-        parent= new HashMap<>();	 // The map of navigated nodes
+        parent= new HashMap<>();
+        // The map of navigated nodes
         
     }
     //Calculate H, the distance between 2 Nodes
@@ -87,6 +89,7 @@ public class Astar extends Maze {
     		printMaze();
     		System.out.println("\nThere is NO possible path to go from the INITIAL state to the GOAL state");
     	}else {
+    		isSolved=true;
     		System.out.println("THE OPTIMAL PATH IS:\n");
     		for(Node n:path) {
     			if(maze[n.getROW()][n.getCOL()]!= 'I' && maze[n.getROW()][n.getCOL()]!= 'G') {
