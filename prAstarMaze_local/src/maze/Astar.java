@@ -12,7 +12,7 @@ public class Astar extends Maze {
     private Set<Node> openSet;
     private Set<Node> closedSet;
     private Map<Node,Node> parent;
-    boolean isSolved;
+    boolean solved;
 
     public Astar() {
     	super();
@@ -82,18 +82,16 @@ public class Astar extends Maze {
         }
         return false; 
     }
-  //To print the path if it exists
+    //To print the path if it exists
     public void printPath() {
     	ArrayList<Node> path =findPath();
-    	if(path==null) {
+    	if(path == null) {
     		printMaze();
-    		System.out.println("\nThere is NO possible path to go from the INITIAL state to the GOAL state");
-    	}else {
-    		isSolved=true;
-    		System.out.println("THE OPTIMAL PATH IS:\n");
-    		for(Node n:path) {
+    	} else {
+    		solved = true;
+    		for(Node n: path) {
     			if(maze[n.getROW()][n.getCOL()]!= 'I' && maze[n.getROW()][n.getCOL()]!= 'G') {
-    				maze[n.getROW()][n.getCOL()]= '+';//It puts '+' in the positions of the path except the initial and goal state
+    				maze[n.getROW()][n.getCOL()]= '+'; // It puts '+' in the positions of the path except the initial and goal state
     			}
     		}
     		printMaze();//To print the new maze with the path
@@ -139,7 +137,15 @@ public class Astar extends Maze {
                 
             }
         }
-
        return null;
     }
+    
+    public boolean isSolved() {
+		return solved;
+	}
+    
+    public char charAt(int i, int j) {
+		return maze[i][j];
+	}
+    
 }

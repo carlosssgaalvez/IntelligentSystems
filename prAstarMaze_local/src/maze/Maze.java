@@ -85,4 +85,12 @@ public class Maze {
 		}
 	}
 	
+	public int getROWS() {
+		return ROWS;
+	}
+	
+	public int getCOLS() {
+		return COLS;
+	}
+	
 }
