@@ -1,4 +1,3 @@
-
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -24,16 +23,16 @@ public class TestMaze {
 	}
 	
 	private static void print(Astar maze) throws IOException {
-		FileWriter output = new FileWriter ("C:\\Users\\juanm\\Documents\\GitHub\\IntelligentSystems\\prAstarMaze_local\\output.txt");
-		char val;
-		for(int i = 0; i < maze.getROWS(); ++i) {
-			for(int j = 0; j < maze.getCOLS(); ++j) {
-				val = maze.charAt(i, j);
-				output.write(val);	
+		try (FileWriter output = new FileWriter ("C:/Users/juanm/Documents/GitHub/IntelligentSystems/prAstarMaze_local/output.txt")){
+			char val;
+			for(int i = 0; i < maze.getROWS(); ++i) {
+				for(int j = 0; j < maze.getCOLS(); ++j) {
+					val = maze.charAt(i, j);
+					output.write(val);	
+				}
+				output.write('\n');
 			}
-			output.write('\n');
 		}
-		output.close();
 	}
 	
 }

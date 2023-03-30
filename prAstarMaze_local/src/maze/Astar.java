@@ -135,8 +135,4 @@ public class Astar extends Maze {
 		return solved;
 	}
     
-    public char charAt(int i, int j) {
-		return maze[i][j];
-	}
-    
 }

@@ -99,4 +99,8 @@ public class Maze {
 		return COLS;
 	}
 	
+	public char charAt(int i, int j) {
+		return maze[i][j];
+	}
+	
 }
