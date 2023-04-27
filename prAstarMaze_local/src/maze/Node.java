@@ -7,6 +7,7 @@ public class Node {
     private int g;
     private int h;
     private int f;
+    
     public Node(int row, int col) {
         this.row = row;
         this.col = col;

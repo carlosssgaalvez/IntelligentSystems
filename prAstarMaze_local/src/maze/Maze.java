@@ -39,9 +39,9 @@ public class Maze {
 	
 	//Configure the Initial (I) and the Goal (G) State
 	private void generateMainStates() {
-		Random random= new Random();	
+		Random random= new Random();
 		rowI = random.nextInt(ROWS);
-        colI = random.nextInt(COLS);
+        colI = random.nextInt(COLS);		
         rowG = random.nextInt(ROWS);
         colG = random.nextInt(COLS);
         // Check that initial and goal states are not obstacles
