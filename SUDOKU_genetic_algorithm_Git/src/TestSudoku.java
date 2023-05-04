@@ -7,6 +7,7 @@ public class TestSudoku {
 		Sudoku s = new Sudoku(1);
 		
 		s.printSudoku();
+		s.printMissingValues();
 
 	}
 
