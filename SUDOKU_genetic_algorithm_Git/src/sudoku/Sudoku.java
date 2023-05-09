@@ -1,17 +1,18 @@
 package sudoku;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Sudoku {
 	
-	private static final String ANSI_CYAN = "\u001B[36m";
-    private static final String ANSI_RESET = "\u001B[0m";
 	
 	private int[][] board;
-	private int[][] missingValues;
+	private ArrayList<Integer>[] missingValues;
 	private final int SIZE = 9;
 	
 	public Sudoku(int op) {
 		board = createMatrix(op);
-		missingValues = getMissingValues();
+		missingValues = getValues();
 	}
 	
 	private int[][] createMatrix(int op) {
@@ -32,7 +33,16 @@ public class Sudoku {
 		return matrix;
 	}
 	
-	private int[][] getMissingValues() { // 
+	
+	public ArrayList<Integer>[] getMissingValues() {
+		return missingValues;
+	}
+	
+	public int[][] getBoard() {
+		return board;
+	}
+
+	private ArrayList<Integer>[] getValues() { // 
 		int[][] other = new int[SIZE][SIZE];
 		for (int i = 0; i < SIZE; ++i) {
 			for (int j = 0; j < SIZE; ++j) {
@@ -47,8 +57,21 @@ public class Sudoku {
 					other[i][v-1] = 0;
 			}
 		}
-		return other;
-	}
+
+		ArrayList<Integer>[] arrayOfMissings = new ArrayList[SIZE];
+		for (int i = 0; i < SIZE; i++) {
+		    arrayOfMissings[i] = new ArrayList<Integer>();
+		}
+		for(int i=0;i<SIZE;i++) {
+			for(int j=0;j<SIZE;j++) {
+				if(other[i][j]!=0) {
+					arrayOfMissings[i].add(other[i][j]);
+				}
+			}
+		}
+	
+		return arrayOfMissings;
+	}	
 	
 	public void printMissingValues() {
 		System.out.println();
@@ -56,27 +79,26 @@ public class Sudoku {
 		System.out.println("--------------- ");
 		for(int i = 0; i < SIZE; ++i) {
 			System.out.print("Row " + i + ": { ");
-			for(int j = 0; j < SIZE; ++j) {
-				if (missingValues[i][j] != 0)
-				System.out.print(missingValues[i][j] + " ");
+			for(int j = 0; j < missingValues[i].size(); ++j) {
+				System.out.printf(missingValues[i].get(j)+" ");
 			}
 			System.out.println("}");
 		}
 	}
 	
 	public void printSudoku() {
-		System.out.println(ANSI_CYAN + " ----------------------- " + ANSI_RESET);
+		System.out.println(" ----------------------- ");
 		for(int i = 0; i < SIZE; ++i) {
 			for(int j = 0; j < SIZE; ++j) {
 				if(j == 0)
-					System.out.print(ANSI_CYAN + "| " + ANSI_RESET);
+					System.out.print("| ");
 				System.out.print(board[i][j] + " ");
 				if((j+1) % 3 == 0)
-					System.out.print(ANSI_CYAN + "| " + ANSI_RESET);
+					System.out.print("| ");
 			}
 			System.out.println();
 			if((i+1) % 3 == 0)
-				System.out.println(ANSI_CYAN + " ----------------------- " + ANSI_RESET);				
+				System.out.println(" ----------------------- ");				
 		}
 	}
 	
