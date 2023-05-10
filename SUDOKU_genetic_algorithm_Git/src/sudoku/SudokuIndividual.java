@@ -2,39 +2,42 @@ package sudoku;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SudokuIndividual {
 	
-	
 	private int[][] matrix;
 	private final int SIZE = 9;
-	public SudokuIndividual(Sudoku s) {
-		matrix=generateIndividual(s);
-		
-	}
 	
+	Random rnd = new Random();
+	
+	public SudokuIndividual(Sudoku s) {
+		matrix = generateIndividual(s);
+	}
+
 	private int[][] generateIndividual(Sudoku s){
-		int [][] relleno = s.getBoard();
+		int [][] filled = s.getBoard();
 		ArrayList<Integer>[] missings = s.getMissingValues();
 		List<Integer> valuesSelected;
 		int randomIndex;
 		int length;
-		for(int i=0;i<SIZE;i++) {
+		for (int i = 0; i < SIZE; i++) {
 			valuesSelected = new ArrayList<>();
-			for(int j=0;j<SIZE;j++) {
-				if(relleno[i][j]==0) {
-					length=missings[i].size();
+			for(int j = 0; j < SIZE; j++) {
+				if (filled[i][j] == 0) {
+					length = missings[i].size();
 					do {
-						randomIndex= (int)Math.floor(Math.random()*length);
-					}while(valuesSelected.contains(missings[i].get(randomIndex)));
+						randomIndex = rnd.nextInt(length);
+					} while (valuesSelected.contains(missings[i].get(randomIndex)));
 					valuesSelected.add(missings[i].get(randomIndex));
-					relleno[i][j]=missings[i].get(randomIndex);
+					filled[i][j] = missings[i].get(randomIndex);
+					System.out.println(filled[i][j]);
 				}
 			}
 		}
-		
-		return relleno;
+		return filled;
 	}
+	
 	public void printIndividual() {
 		System.out.println("Individual (POSIBLE SOLUCION)");
 		System.out.println(" ----------------------- ");

@@ -33,7 +33,6 @@ public class Sudoku {
 		return matrix;
 	}
 	
-	
 	public ArrayList<Integer>[] getMissingValues() {
 		return missingValues;
 	}
@@ -57,19 +56,17 @@ public class Sudoku {
 					other[i][v-1] = 0;
 			}
 		}
-
 		ArrayList<Integer>[] arrayOfMissings = new ArrayList[SIZE];
 		for (int i = 0; i < SIZE; i++) {
 		    arrayOfMissings[i] = new ArrayList<Integer>();
 		}
-		for(int i=0;i<SIZE;i++) {
-			for(int j=0;j<SIZE;j++) {
-				if(other[i][j]!=0) {
+		for (int i=0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				if (other[i][j] != 0) {
 					arrayOfMissings[i].add(other[i][j]);
 				}
 			}
 		}
-	
 		return arrayOfMissings;
 	}	
 	
