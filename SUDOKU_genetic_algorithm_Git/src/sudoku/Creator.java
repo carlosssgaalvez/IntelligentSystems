@@ -44,7 +44,8 @@ public class Creator {
 				set.add(n);
 			}
 			for (Integer hole_idx : set) {
-				solution[i*9+hole_idx] = 0;
+				solution[i*9 + 
+				         hole_idx] = 0;
 			}
 		}
 		return solution;

@@ -1,22 +1,29 @@
 package sudoku;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class SudokuIndividual {
 	
 	private int[][] matrix;
 	private final int SIZE = 9;
 	
-	Random rnd = new Random();
+	private int fitness;
+	
+	private boolean solved;
+	private final int GOAL = 162;
+	
+	private static final Random rnd = new Random();
 	
 	public SudokuIndividual(Sudoku s) {
 		matrix = generateIndividual(s);
+		fitness = calcFitness();
 	}
 
 	private int[][] generateIndividual(Sudoku s){
-		int [][] filled = s.getBoard();
+		int[][] filled = new int[SIZE][SIZE];
+		for(int i = 0; i < SIZE; ++i)
+			for(int j = 0; j < SIZE; ++j)
+				filled[i][j] = s.getBoard()[i][j];
 		ArrayList<Integer>[] missings = s.getMissingValues();
 		List<Integer> valuesSelected;
 		int randomIndex;
@@ -31,7 +38,6 @@ public class SudokuIndividual {
 					} while (valuesSelected.contains(missings[i].get(randomIndex)));
 					valuesSelected.add(missings[i].get(randomIndex));
 					filled[i][j] = missings[i].get(randomIndex);
-					System.out.println(filled[i][j]);
 				}
 			}
 		}
@@ -53,6 +59,46 @@ public class SudokuIndividual {
 			if((i+1) % 3 == 0)
 				System.out.println(" ----------------------- ");				
 		}
+	}
+	
+	private int calcFitness() {
+		int v = 0;
+		v += fitnessOfRegion() + fitnessOfColumns();
+		return v;
+	}
+	
+	private int fitnessOfRegion() {
+		int v = 0;
+		
+		return v;
+	}
+	
+	private int fitnessOfColumns() {
+		int v = 0;
+		boolean is;
+		int cnt;
+		for (int i = 0; i < SIZE; ++i) {
+			for (int j = 0; j < SIZE; ++j) {
+				is = false;
+				cnt = 0;
+				while (!is && cnt < SIZE) {
+					if (i != cnt && matrix[i][j] == matrix[cnt][j])
+						is = true;
+					++cnt;
+				}
+				if (!is)
+					++v;
+			}
+		}
+		return v;
+	}
+	
+	public int getFitness() {
+		return fitness;
+	}
+	
+	public boolean isSolved() {
+		return (fitness == GOAL);
 	}
 	
 }
