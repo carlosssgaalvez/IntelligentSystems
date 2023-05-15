@@ -18,6 +18,26 @@ public class SudokuIndividual {
 		matrix = generateIndividual(s);
 		fitness = calcFitness();
 	}
+	
+	public SudokuIndividual (Sudoku s,SudokuIndividual s1) {
+		matrix = generateMutation(s,s1);
+		fitness = calcFitness();
+	}
+	
+	public SudokuIndividual (SudokuIndividual s1, SudokuIndividual s2) {
+		
+	}
+	
+	private int[][] generateMutation(Sudoku s,SudokuIndividual s1){
+		int[][] mMutada = new int[SIZE][SIZE];
+		for(int i = 0; i < SIZE; ++i) {
+			for(int j = 0; j < SIZE; ++j) {
+				
+			}
+		}
+		return mMutada;
+	}
+	
 
 	private int[][] generateIndividual(Sudoku s){
 		int[][] filled = new int[SIZE][SIZE];
@@ -63,13 +83,50 @@ public class SudokuIndividual {
 	
 	private int calcFitness() {
 		int v = 0;
-		v += fitnessOfRegion() + fitnessOfColumns();
+		v = fitnessOfRegion() + fitnessOfColumns();
 		return v;
 	}
 	
 	private int fitnessOfRegion() {
 		int v = 0;
-		
+		int cntI,cntJ;
+		int posicionI,posicionJ;
+		boolean is;
+		for(int i=0;i<SIZE;i++) {
+			for(int j=0;j<SIZE;j++) {
+				is=true;
+				if(i<3) {
+					posicionI=3;
+				}else if(i<6) {
+					posicionI = 6;
+				}else {
+					posicionI = 9;
+				}
+				if(j<3) {
+					posicionJ = 3;
+				}else if(j<6) {
+					posicionJ = 6;
+				}else {
+					posicionJ = 9;
+				}
+				cntI = posicionI-3;
+				
+				while(is && cntI < posicionI) {
+					cntJ = posicionJ-3;
+					while(is && cntJ < posicionJ) {
+						if(!(i == cntI && j == cntJ)) {
+							if (matrix[i][j] == matrix[cntI][cntJ]) {
+								is = false;
+							}
+						}						
+						cntJ++;
+					}			
+					cntI++;
+				}
+				if (is)
+					++v;
+			}
+		}
 		return v;
 	}
 	

@@ -11,20 +11,29 @@ public class SudokuPopulation {
 	
 	public SudokuPopulation(Sudoku s) {
 		population = new ArrayList<>();
-		addIndividuals(s);
 		totalFitness = sumUpAllFitness();
+		
 	}
 	
-	private void addIndividuals(Sudoku s) {
+	public void addIndividuals(Sudoku s) {
 		for (int i = 0; i < populationSize; ++i)
 			population.add(new SudokuIndividual(s));
 	}
 	
+	public List<SudokuIndividual> getPopulation() {
+		return population;
+	}
+
 	private int sumUpAllFitness() {
 		int v = 0;
 		for (int i = 0; i < populationSize; ++i)
 			totalFitness += population.get(i).getFitness();
 		return v;
 	}
-	
+	public int getTotalFitness(){
+		return totalFitness;
+	}
+	public int getPopulationSize(){
+		return populationSize;
+	}
 }
