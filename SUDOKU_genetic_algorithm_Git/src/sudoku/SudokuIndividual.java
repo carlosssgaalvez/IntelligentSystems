@@ -28,13 +28,53 @@ public class SudokuIndividual {
 		
 	}
 	
+	
+	
+	public int[][] getMatrix() {
+		return matrix;
+	}
+
+	public void setMatrix(int[][] matrix) {
+		this.matrix = matrix;
+	}
+
 	private int[][] generateMutation(Sudoku s,SudokuIndividual s1){
+		// parte de la matriz que se queda igual
 		int[][] mMutada = new int[SIZE][SIZE];
-		for(int i = 0; i < SIZE; ++i) {
+		int randomRow = 1 + rnd.nextInt(SIZE);
+		for(int i = 0; i < randomRow; ++i) {
 			for(int j = 0; j < SIZE; ++j) {
-				
+				mMutada[i][j] = s1.matrix[i][j];
 			}
 		}
+		
+		
+		//parte de la matriz mutada
+		for(int i = randomRow; i < SIZE; ++i)
+			for(int j = 0; j < SIZE; ++j)
+				mMutada[i][j] = s.getBoard()[i][j];
+		
+		ArrayList<Integer>[] missings = s.getMissingValues();
+		List<Integer> valuesSelected;
+		int randomIndex;
+		int length;
+		
+		for (int i = randomRow; i < SIZE; i++) {
+			valuesSelected = new ArrayList<>();
+			for(int j = 0; j < SIZE; j++) {
+				if (mMutada[i][j] == 0) {
+					length = missings[i].size();
+					do {
+						randomIndex = rnd.nextInt(length);
+					} while (valuesSelected.contains(missings[i].get(randomIndex)));
+					valuesSelected.add(missings[i].get(randomIndex));
+					mMutada[i][j] = missings[i].get(randomIndex);
+				}
+			}
+		}
+		
+		
+		
 		return mMutada;
 	}
 	
@@ -79,6 +119,7 @@ public class SudokuIndividual {
 			if((i+1) % 3 == 0)
 				System.out.println(" ----------------------- ");				
 		}
+		System.out.println("Fitness: "+ fitness);
 	}
 	
 	private int calcFitness() {
@@ -151,7 +192,7 @@ public class SudokuIndividual {
 	}
 	
 	public int getFitness() {
-		return fitness;
+		return calcFitness();
 	}
 	
 	public boolean isSolved() {
