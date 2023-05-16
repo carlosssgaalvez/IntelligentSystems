@@ -20,7 +20,7 @@ public class GeneticAlgorithm {
 		if(randomMode == 0) { // se queda igual
 			poblaciones.get(1).getPopulation().add(s1);
 		} else if(randomMode == 1){ //mutation
-			SudokuIndividual nuevo = new SudokuIndividual(s1);
+			SudokuIndividual nuevo = new SudokuIndividual(s);
 			poblaciones.get(1).getPopulation().add(nuevo);
 		}else { //crossover
 			SudokuIndividual s2 = eligeIndividual(p);
