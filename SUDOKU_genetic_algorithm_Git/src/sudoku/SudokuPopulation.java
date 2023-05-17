@@ -5,14 +5,13 @@ import java.util.List;
 
 public class SudokuPopulation {
 	
-	private int populationSize = 100;
+	private int populationSize = 50;
 	private List<SudokuIndividual> population; // Population of Sudokus that have in common the assigned cells with numbers and each one a different solution proposal 
-	private int totalFitness=0;
+	private int totalFitness = 0;
+	public static int numPopulation = 0;
 	
 	public SudokuPopulation() {
 		population = new ArrayList<>();
-	
-		
 	}
 	
 	public void addIndividuals(Sudoku s) {
@@ -23,14 +22,10 @@ public class SudokuPopulation {
 	public List<SudokuIndividual> getPopulation() {
 		return population;
 	}
-
-	public void sumUpAllFitness() {
-		
+	
+	public int getTotalFitness(){
 		for (int i = 0; i < populationSize; ++i)
 			totalFitness += population.get(i).getFitness();
-	
-	}
-	public int getTotalFitness(){
 		return totalFitness;
 	}
 	public int getPopulationSize(){
@@ -38,11 +33,10 @@ public class SudokuPopulation {
 	}
 	
 	public void showPopulation() {
-		System.out.println("POBLACION 1");
-		
-		for(int i=0;i<populationSize;i++) {
+		++numPopulation;
+		System.out.println("/-/-/-/-/-/-/" + "POBLACION " + numPopulation + "/-/-/-/-/-/-/");
+		for (int i = 0; i < populationSize; ++i)
 			population.get(i).printIndividual();
-		}
-		System.out.println("------------------------");
+		System.out.println("/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/");
 	}
 }
