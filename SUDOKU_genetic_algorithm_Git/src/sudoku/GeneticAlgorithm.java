@@ -20,30 +20,59 @@ public class GeneticAlgorithm {
 		poblaciones.get(p).showPopulation();
 		
 		
-		while(isSolve(poblaciones.get(p)) == -1 && p < 500) {
+		while(isSolve(poblaciones.get(p)) == -1 && p < 150) {
 			for(int i=0;i<poblaciones.get(p).getPopulationSize();i++) {
 				
-				int randomMode = rnd.nextInt(2);
+				int randomMode = rnd.nextInt(10);
 				SudokuPopulation poblacion = new SudokuPopulation();
 				poblaciones.add(poblacion);
 				SudokuIndividual s0 = eligeIndividual(p);
 			
 			
-				if(randomMode == 0) { // se queda igual
+				if(randomMode<2) { // se queda igual
 					poblaciones.get(p+1).getPopulation().add(s0);
 					
-				} else if(randomMode == 1){ //mutation
+				} else if(randomMode == 2){ //mutation
 					SudokuIndividual nuevo = new SudokuIndividual(s,s0);
 					poblaciones.get(p+1).getPopulation().add(nuevo);
 					
+				}else if(randomMode>=3) { //crossover
+					SudokuIndividual s2 = eligeIndividual(p);
+					
+					int row;
+					int [][] matrix = new int[SIZE][SIZE];
+					row = 1 + rnd.nextInt(SIZE);
+					for(int c=0;c<row;c++) {
+						for(int j=0;j<SIZE;j++) {
+							matrix[c][j] = s0.getMatrix()[c][j];
+						}
+					}
+					for(int l=row;l<SIZE;l++) {
+						for(int m=0;m<SIZE;m++) {
+							matrix[l][m] = s2.getMatrix()[l][m];
+						}
+					}
+					SudokuIndividual ind1 = new SudokuIndividual(matrix);
+					poblaciones.get(p+1).getPopulation().add(ind1);
+					
+					int [][] matrix2 = new int[SIZE][SIZE];
+					for(int c=0;c<row;c++) {
+						for(int j=0;j<SIZE;j++) {
+							matrix2[c][j] = s2.getMatrix()[c][j];
+						}
+					}
+					for(int l=row;l<SIZE;l++) {
+						for(int m=0;m<SIZE;m++) {
+							matrix2[l][m] = s0.getMatrix()[l][m];
+						}
+					}
+					
+					SudokuIndividual ind2 = new SudokuIndividual(matrix2);
+					poblaciones.get(p+1).getPopulation().add(ind2);
+				
+					i++;
 				}
-			/*	
-			}else { //crossover
-				/*SudokuIndividual s4 = eligeIndividual(p);
-				SudokuIndividual nuevo = new SudokuIndividual(s1,s2);
-				poblaciones.get(1).getPopulation().add(nuevo);
-			}
-			*/
+			
 			}
 			p++;
 			poblaciones.get(p).sumUpAllFitness();
@@ -100,5 +129,6 @@ public class GeneticAlgorithm {
 		}
 		return poblaciones.get(p).getPopulation().get(i);
 	}
+	
 	
 }

@@ -23,9 +23,11 @@ public class SudokuIndividual {
 	}
 	
 	// CROSS-OVER
-	public SudokuIndividual(SudokuIndividual s1, SudokuIndividual s2) {
-		
+	public SudokuIndividual(int [][] matrix) {
+		this.matrix = matrix;
+		fitness = calcFitness();
 	}
+	
 	
 	public int[][] getMatrix() {
 		return matrix;
@@ -37,38 +39,34 @@ public class SudokuIndividual {
 
 	private int[][] generateMutation(Sudoku s, SudokuIndividual s1){
 		// part of the matrix that remains the same
-		int[][] mMutated = new int[SIZE][SIZE];
-		int randomRow = 1 + rnd.nextInt(SIZE);
-		for(int i = 0; i < randomRow; ++i) {
-			for(int j = 0; j < SIZE; ++j) {
-				mMutated[i][j] = s1.matrix[i][j];
-			}
-		}
+		int randomRow = rnd.nextInt(SIZE);
 		
-		// part of the mutated matrix
-		for(int i = randomRow; i < SIZE; ++i)
+		int[][] filled = new int[SIZE][SIZE];
+		for(int i = 0; i < SIZE; ++i)
 			for(int j = 0; j < SIZE; ++j)
-				mMutated[i][j] = s.getBoard()[i][j];
-		
+				filled[i][j] = s.getBoard()[i][j];
 		ArrayList<Integer>[] missings = s.getMissingValues();
-		List<Integer> valuesSelected;
+		List<Integer> valuesSelected = new ArrayList<>();
 		int randomIndex;
 		int length;
 		
-		for (int i = randomRow; i < SIZE; i++) {
-			valuesSelected = new ArrayList<>();
-			for(int j = 0; j < SIZE; j++) {
-				if (mMutated[i][j] == 0) {
-					length = missings[i].size();
-					do {
-						randomIndex = rnd.nextInt(length);
-					} while (valuesSelected.contains(missings[i].get(randomIndex)));
-					valuesSelected.add(missings[i].get(randomIndex));
-					mMutated[i][j] = missings[i].get(randomIndex);
+		for(int i = 0; i < SIZE; ++i) {
+			for(int j = 0; j < SIZE; ++j) {
+				if(i == randomRow) {
+					if (filled[randomRow][j] == 0) {
+						length = missings[i].size();
+						do {
+							randomIndex = rnd.nextInt(length);
+						} while (valuesSelected.contains(missings[i].get(randomIndex)));
+						valuesSelected.add(missings[i].get(randomIndex));
+						filled[i][j] = missings[i].get(randomIndex);
+					}
 				}
 			}
 		}
-		return mMutated;
+		
+		
+		return filled;
 	}
 	
 
