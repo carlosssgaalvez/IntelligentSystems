@@ -50,9 +50,9 @@ public class SudokuIndividual {
 		int randomIndex;
 		int length;
 		
-		for(int i = 0; i < SIZE; ++i) {
-			for(int j = 0; j < SIZE; ++j) {
-				if(i == randomRow) {
+		for (int i = 0; i < SIZE; ++i) {
+			for (int j = 0; j < SIZE; ++j) {
+				if (i == randomRow) {
 					if (filled[randomRow][j] == 0) {
 						length = missings[i].size();
 						do {
@@ -64,8 +64,6 @@ public class SudokuIndividual {
 				}
 			}
 		}
-		
-		
 		return filled;
 	}
 	
@@ -96,7 +94,6 @@ public class SudokuIndividual {
 	}
 	
 	public void printIndividual() {
-		System.out.println("Individual (POSIBLE SOLUCION)");
 		System.out.println(" ----------------------- ");
 		for(int i = 0; i < SIZE; ++i) {
 			for(int j = 0; j < SIZE; ++j) {
@@ -110,7 +107,7 @@ public class SudokuIndividual {
 			if((i+1) % 3 == 0)
 				System.out.println(" ----------------------- ");				
 		}
-		System.out.println("Fitness: "+ fitness);
+		System.out.println("Fitness = "+ fitness);
 	}
 	
 	private int calcFitness() {
@@ -134,7 +131,7 @@ public class SudokuIndividual {
 				} else {
 					posicionI = 9;
 				}
-				if(j < 3) {
+				if (j < 3) {
 					posicionJ = 3;
 				} else if (j < 6) {
 					posicionJ = 6;

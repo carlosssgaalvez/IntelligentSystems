@@ -11,9 +11,6 @@ public class TestSudoku {
 		System.out.println();
 		GeneticAlgorithm algorithm = new GeneticAlgorithm(s);
 		algorithm.algorithm(s);
-		System.out.println();
-		
-		
 		
 	}
 
