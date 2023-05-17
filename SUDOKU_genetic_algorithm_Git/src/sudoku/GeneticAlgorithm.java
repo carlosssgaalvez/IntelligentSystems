@@ -20,37 +20,36 @@ public class GeneticAlgorithm {
 		poblaciones.get(p).showPopulation();
 		
 		
-		while(isSolve(poblaciones.get(p)) == -1 && p < 1000) {
+		while(isSolve(poblaciones.get(p)) == -1 && p < 500) {
+			for(int i=0;i<poblaciones.get(p).getPopulationSize();i++) {
+				
+				int randomMode = rnd.nextInt(2);
+				SudokuPopulation poblacion = new SudokuPopulation();
+				poblaciones.add(poblacion);
+				SudokuIndividual s0 = eligeIndividual(p);
 			
-			int randomMode = rnd.nextInt(2);
-			SudokuPopulation poblacion = new SudokuPopulation();
-			poblaciones.add(poblacion);
-			if(randomMode == 0) { // se queda igual
-				
-				
-				SudokuIndividual s0;
-				for(int k =0;k<poblaciones.get(p).getPopulationSize();k++) {
-					s0 = eligeIndividual(p);
+			
+				if(randomMode == 0) { // se queda igual
 					poblaciones.get(p+1).getPopulation().add(s0);
-				}
-			} else if(randomMode == 1){ //mutation
-				SudokuIndividual s1,nuevo;
-				for(int k =0;k<poblaciones.get(p).getPopulationSize();k++) {
-					s1 = eligeIndividual(p);
-					nuevo = new SudokuIndividual(s,s1);
+					
+				} else if(randomMode == 1){ //mutation
+					SudokuIndividual nuevo = new SudokuIndividual(s,s0);
 					poblaciones.get(p+1).getPopulation().add(nuevo);
+					
 				}
-				
-			}/*else { //crossover
+			/*	
+			}else { //crossover
 				/*SudokuIndividual s4 = eligeIndividual(p);
 				SudokuIndividual nuevo = new SudokuIndividual(s1,s2);
-				poblaciones.get(1).getPopulation().add(nuevo);*/
+				poblaciones.get(1).getPopulation().add(nuevo);
 			}
-		*/
+			*/
+			}
 			p++;
 			poblaciones.get(p).sumUpAllFitness();
-			
 		}
+		
+
 		poblaciones.get(p).showPopulation();
 		int n = isSolve(poblaciones.get(p));
 		if(n != -1) {
