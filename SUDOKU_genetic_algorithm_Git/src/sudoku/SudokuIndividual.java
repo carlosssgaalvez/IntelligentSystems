@@ -6,10 +6,7 @@ public class SudokuIndividual {
 	
 	private int[][] matrix;
 	private final int SIZE = 9;
-	
 	private int fitness;
-	
-	private boolean solved;
 	private final int GOAL = 162;
 	
 	private static final Random rnd = new Random();
@@ -19,16 +16,16 @@ public class SudokuIndividual {
 		fitness = calcFitness();
 	}
 	
-	public SudokuIndividual (Sudoku s,SudokuIndividual s1) {
-		matrix = generateMutation(s,s1);
+	// MUTATION
+	public SudokuIndividual(Sudoku s, SudokuIndividual s1) {
+		matrix = generateMutation(s, s1);
 		fitness = calcFitness();
 	}
 	
-	public SudokuIndividual (SudokuIndividual s1, SudokuIndividual s2) {
+	// CROSS-OVER
+	public SudokuIndividual(SudokuIndividual s1, SudokuIndividual s2) {
 		
 	}
-	
-	
 	
 	public int[][] getMatrix() {
 		return matrix;
@@ -38,21 +35,20 @@ public class SudokuIndividual {
 		this.matrix = matrix;
 	}
 
-	private int[][] generateMutation(Sudoku s,SudokuIndividual s1){
-		// parte de la matriz que se queda igual
-		int[][] mMutada = new int[SIZE][SIZE];
+	private int[][] generateMutation(Sudoku s, SudokuIndividual s1){
+		// part of the matrix that remains the same
+		int[][] mMutated = new int[SIZE][SIZE];
 		int randomRow = 1 + rnd.nextInt(SIZE);
 		for(int i = 0; i < randomRow; ++i) {
 			for(int j = 0; j < SIZE; ++j) {
-				mMutada[i][j] = s1.matrix[i][j];
+				mMutated[i][j] = s1.matrix[i][j];
 			}
 		}
 		
-		
-		//parte de la matriz mutada
+		// part of the mutated matrix
 		for(int i = randomRow; i < SIZE; ++i)
 			for(int j = 0; j < SIZE; ++j)
-				mMutada[i][j] = s.getBoard()[i][j];
+				mMutated[i][j] = s.getBoard()[i][j];
 		
 		ArrayList<Integer>[] missings = s.getMissingValues();
 		List<Integer> valuesSelected;
@@ -62,20 +58,17 @@ public class SudokuIndividual {
 		for (int i = randomRow; i < SIZE; i++) {
 			valuesSelected = new ArrayList<>();
 			for(int j = 0; j < SIZE; j++) {
-				if (mMutada[i][j] == 0) {
+				if (mMutated[i][j] == 0) {
 					length = missings[i].size();
 					do {
 						randomIndex = rnd.nextInt(length);
 					} while (valuesSelected.contains(missings[i].get(randomIndex)));
 					valuesSelected.add(missings[i].get(randomIndex));
-					mMutada[i][j] = missings[i].get(randomIndex);
+					mMutated[i][j] = missings[i].get(randomIndex);
 				}
 			}
 		}
-		
-		
-		
-		return mMutada;
+		return mMutated;
 	}
 	
 
@@ -130,32 +123,32 @@ public class SudokuIndividual {
 	
 	private int fitnessOfRegion() {
 		int v = 0;
-		int cntI,cntJ;
-		int posicionI,posicionJ;
+		int cntI, cntJ;
+		int posicionI, posicionJ;
 		boolean is;
-		for(int i=0;i<SIZE;i++) {
-			for(int j=0;j<SIZE;j++) {
-				is=true;
-				if(i<3) {
-					posicionI=3;
-				}else if(i<6) {
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				is = true;
+				if (i < 3) {
+					posicionI = 3;
+				} else if (i < 6) {
 					posicionI = 6;
-				}else {
+				} else {
 					posicionI = 9;
 				}
-				if(j<3) {
+				if(j < 3) {
 					posicionJ = 3;
-				}else if(j<6) {
+				} else if (j < 6) {
 					posicionJ = 6;
-				}else {
+				} else {
 					posicionJ = 9;
 				}
 				cntI = posicionI-3;
 				
-				while(is && cntI < posicionI) {
+				while (is && cntI < posicionI) {
 					cntJ = posicionJ-3;
-					while(is && cntJ < posicionJ) {
-						if(!(i == cntI && j == cntJ)) {
+					while (is && cntJ < posicionJ) {
+						if (!(i == cntI && j == cntJ)) {
 							if (matrix[i][j] == matrix[cntI][cntJ]) {
 								is = false;
 							}
