@@ -41,11 +41,12 @@ public class GeneticAlgorithm {
 					poblaciones.get(p+1).getPopulation().add(nuevo);
 				}
 				
-			}else { //crossover
+			}/*else { //crossover
 				/*SudokuIndividual s4 = eligeIndividual(p);
 				SudokuIndividual nuevo = new SudokuIndividual(s1,s2);
 				poblaciones.get(1).getPopulation().add(nuevo);*/
 			}
+		*/
 			p++;
 			poblaciones.get(p).sumUpAllFitness();
 			
