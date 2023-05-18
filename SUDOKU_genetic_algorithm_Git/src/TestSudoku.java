@@ -26,7 +26,7 @@ public class TestSudoku {
 	}
 	
 	private static void print(SudokuIndividual s, int fitness) throws IOException {
-		try (FileWriter output = new FileWriter ("C:\\Users\\juanm\\Documents\\GitHub\\IntelligentSystems\\SUDOKU_genetic_algorithm_Git\\output.txt")) {
+		try (FileWriter output = new FileWriter ("output.txt")) {
 			char val;
 			output.write(" ----------------------- " + "\n");
 			for(int i = 0; i < SIZE; ++i) {
