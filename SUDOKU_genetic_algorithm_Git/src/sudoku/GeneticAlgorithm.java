@@ -25,12 +25,16 @@ public class GeneticAlgorithm {
 		
 		poblaciones.get(p).addIndividuals(s);
 		poblaciones.get(p).getTotalFitness();
-		poblaciones.get(p).showPopulation();
+		poblaciones.get(p).showPopulation(p);
 		
 		while (isSolved(poblaciones.get(p)) == -1 && p < 150) {
 			for (int i = 0; i < populationSize; ++i) {
 				
-				int randomMode = rnd.nextInt(10);
+				int randomMode = rnd.nextInt(10); // probabilities
+				// int randomMode = 1;
+				// int randomMode = 3;
+				// int randomMode = 7;
+				
 				SudokuPopulation poblacion = new SudokuPopulation();
 				poblaciones.add(poblacion);
 				SudokuIndividual s0 = eligeIndividual(p);
@@ -78,7 +82,7 @@ public class GeneticAlgorithm {
 			poblaciones.get(p).getTotalFitness();
 		}
 	
-		poblaciones.get(p).showPopulation();
+		poblaciones.get(p).showPopulation(p);
 		int n = isSolved(poblaciones.get(p));
 		if (n != -1) {
 			System.out.println("SOLUCION CORECTA:");
