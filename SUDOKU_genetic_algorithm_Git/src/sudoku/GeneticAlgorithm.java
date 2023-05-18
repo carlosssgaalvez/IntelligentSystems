@@ -9,7 +9,10 @@ public class GeneticAlgorithm {
 	private List<SudokuPopulation> poblaciones;
 	private final int SIZE = 9;	
 	
+	public SudokuIndividual solvedOne;
+	
 	private static final Random rnd = new Random();
+	
 	public GeneticAlgorithm(Sudoku s) {
 		poblaciones = new ArrayList<>();
 		poblaciones.add(new SudokuPopulation());
@@ -79,15 +82,16 @@ public class GeneticAlgorithm {
 		int n = isSolved(poblaciones.get(p));
 		if (n != -1) {
 			System.out.println("SOLUCION CORECTA:");
-			poblaciones.get(p).getPopulation().get(n).printIndividual();
+			solvedOne = poblaciones.get(p).getPopulation().get(n);
+			solvedOne.printIndividual();
 		}		
 	}
 	
 	private int isSolved(SudokuPopulation sp) {
 		boolean ok = false;
 		int cnt = 0;
-		while(!ok && cnt < sp.getPopulation().size()) {
-			if(sp.getPopulation().get(cnt).isSolved())
+		while (!ok && cnt < sp.getPopulation().size()) {
+			if (sp.getPopulation().get(cnt).isSolved())
 				ok = true;	
 			++cnt;
 		}	
@@ -98,20 +102,19 @@ public class GeneticAlgorithm {
 	
 	public SudokuIndividual eligeIndividual(int p) {
 		int randomIndex;
-		
-		int length= poblaciones.get(p).getTotalFitness();
-		int cnt=0,i = 0;
+		int length = poblaciones.get(p).getTotalFitness();
+		int cnt = 0, i = 0;
 		boolean encontrado = false;
 		randomIndex = rnd.nextInt(length);
-		while(!encontrado) {
+		while (!encontrado && i < poblaciones.get(p).getPopulationSize()) {
 			cnt += poblaciones.get(p).getPopulation().get(i).getFitness();
-			if(randomIndex < cnt) {
+			if (randomIndex < cnt)
 				encontrado = true;
-			}
-			if(!encontrado) {
-				i++;
-			}
+			if (!encontrado)
+				++i;
 		}
+		if (i == poblaciones.get(p).getPopulationSize())
+			--i;
 		return poblaciones.get(p).getPopulation().get(i);
 	}
 	

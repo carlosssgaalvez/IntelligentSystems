@@ -187,4 +187,8 @@ public class SudokuIndividual {
 		return (fitness == GOAL);
 	}
 	
+	public int charAt(int i, int j) {
+		return matrix[i][j];
+	}
+	
 }
