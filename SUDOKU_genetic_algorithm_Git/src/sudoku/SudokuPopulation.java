@@ -5,7 +5,7 @@ import java.util.List;
 
 public class SudokuPopulation {
 	
-	private final int POPULATION_SIZE = 50;
+	private final int POPULATION_SIZE = 1000;
 	private List<SudokuIndividual> population; // Population of Sudokus that have in common the assigned cells with numbers and each one a different solution proposal 
 	private int totalFitness = 0;
 	
@@ -21,10 +21,13 @@ public class SudokuPopulation {
 	public List<SudokuIndividual> getPopulation() {
 		return population;
 	}
-
-	public int getTotalFitness(){
+	
+	public void sumUpAllFitness() {
 		for (int i = 0; i < POPULATION_SIZE; ++i)
 			totalFitness += population.get(i).getFitness();
+	}
+	
+	public int getTotalFitness(){
 		return totalFitness;
 	}
 	public int getPopulationSize(){

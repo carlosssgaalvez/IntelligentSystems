@@ -8,7 +8,7 @@ public class GeneticAlgorithm {
 	
 	private List<SudokuPopulation> poblaciones;
 	private final int SIZE = 9;	
-	private final int CREATIONS = 2000;	
+	private final int CREATIONS = 1000;	
 	
 	public SudokuIndividual solvedOne;
 	
@@ -25,8 +25,8 @@ public class GeneticAlgorithm {
 		int populationSize = poblaciones.get(p).getPopulationSize();
 		
 		poblaciones.get(p).addIndividuals(s);
-		poblaciones.get(p).getTotalFitness();
-		poblaciones.get(p).showPopulation(p);
+		poblaciones.get(p).sumUpAllFitness();
+		// poblaciones.get(p).showPopulation(p);		
 		
 		while (isSolved(poblaciones.get(p)) == -1 && p < CREATIONS) {
 			for (int i = 0; i < populationSize; ++i) {
@@ -80,21 +80,25 @@ public class GeneticAlgorithm {
 				}
 			}
 			++p;
-			poblaciones.get(p).getTotalFitness();
+			poblaciones.get(p).sumUpAllFitness();
+			
+			System.out.println("POPULATION " + p);
+			System.out.println("Mean fitness of population " + p + ": " + getMeanFitness(poblaciones.get(p)));
+			System.out.println("Biggest fitness of population " + p + ": " + getBiggestFitness(poblaciones.get(p)).getFitness());
+			System.out.println();
 		}
-	
-		poblaciones.get(p).showPopulation(p);
+		
 		int n = isSolved(poblaciones.get(p));
 		if (n != -1) { // sudoku completely SOLVED
 			System.out.println("SOLUCION CORECTA:");
 			solvedOne = poblaciones.get(p).getPopulation().get(n);
 			solvedOne.printIndividual();
 		} else { // sudoku partially solved -> BEST FITNESS found
-			solvedOne = getBiggerFitness(poblaciones.get(p));
+			solvedOne = getBiggestFitness(poblaciones.get(p));
 		}
 	}
 	
-	private SudokuIndividual getBiggerFitness(SudokuPopulation onePopulation) {
+	private SudokuIndividual getBiggestFitness(SudokuPopulation onePopulation) {
 		int bigger = onePopulation.getPopulation().get(0).getFitness();
 		int biggerIndex = 0;
 		for (int i = 1; i < onePopulation.getPopulationSize(); ++i) {
@@ -104,6 +108,10 @@ public class GeneticAlgorithm {
 			}
 		}
 		return onePopulation.getPopulation().get(biggerIndex);
+	}
+	
+	private int getMeanFitness(SudokuPopulation onePopulation) {
+		return (onePopulation.getTotalFitness() / onePopulation.getPopulationSize());
 	}
 
 	private int isSolved(SudokuPopulation sp) {
