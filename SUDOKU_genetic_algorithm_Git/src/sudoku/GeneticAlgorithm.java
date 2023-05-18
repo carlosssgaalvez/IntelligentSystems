@@ -91,10 +91,8 @@ public class GeneticAlgorithm {
 		int n = isSolved(poblaciones.get(p));
 		if (n != -1) { // sudoku completely SOLVED
 			System.out.println("SOLUCION CORECTA:");
-			solvedOne = poblaciones.get(p).getPopulation().get(n);
-			solvedOne.printIndividual();
-		} else { // sudoku partially solved -> BEST FITNESS found
 			solvedOne = getBiggestFitness(poblaciones.get(p));
+			getBiggestFitness(poblaciones.get(p)).printIndividual();
 		}
 	}
 	
