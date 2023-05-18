@@ -38,11 +38,11 @@ public class GeneticAlgorithm {
 				if (randomMode < 2) { // the individual remains the same
 					poblaciones.get(p+1).getPopulation().add(s0);
 					
-				} else if (randomMode == 2) { // mutation is applied to the individual
-					SudokuIndividual nuevo = new SudokuIndividual(s,s0);
+				} else if (randomMode >= 2 && randomMode < 4) { // mutation is applied to the individual
+					SudokuIndividual nuevo = new SudokuIndividual(s, s0);
 					poblaciones.get(p+1).getPopulation().add(nuevo);
 					
-				} else if (randomMode >= 3) { // crossover is applied to the individual
+				} else if (randomMode >= 4) { // crossover is applied to the individual
 					SudokuIndividual s2 = eligeIndividual(p);
 					
 					int row;
