@@ -36,7 +36,9 @@ public class SudokuIndividual {
 	public void setMatrix(int[][] matrix) {
 		this.matrix = matrix;
 	}
-
+	
+	/* FIRST VERSION */
+	/*
 	private int[][] generateMutation(Sudoku s, SudokuIndividual s1){
 		// part of the matrix that remains the same
 		int randomRow = rnd.nextInt(SIZE);
@@ -64,6 +66,33 @@ public class SudokuIndividual {
 				}
 			}
 		}
+		return filled;
+	}
+	*/
+	
+	private int[][] generateMutation(Sudoku s, SudokuIndividual s1){
+		// part of the matrix that remains the same
+		int randomRow = rnd.nextInt(SIZE);
+		int[][] filled = new int[SIZE][SIZE];
+		
+		for(int i = 0; i < SIZE; ++i)
+			for(int j = 0; j < SIZE; ++j)
+				filled[i][j] = s1.getMatrix()[i][j];
+		
+		int randomCol1, randomCol2;
+		
+		do {
+			randomCol1 = rnd.nextInt(SIZE);
+		} while (s.getBoard()[randomRow][randomCol1] != 0);
+		
+		do {
+			randomCol2 = rnd.nextInt(SIZE);
+		} while (s.getBoard()[randomRow][randomCol2] != 0 && (randomCol1 != randomCol2));
+		
+		int valor1 = s1.matrix[randomRow][randomCol1];
+		int valor2 = s1.matrix[randomRow][randomCol2];
+		filled[randomRow][randomCol1] = valor2;
+		filled[randomRow][randomCol2] = valor1;
 		return filled;
 	}
 	
@@ -187,8 +216,8 @@ public class SudokuIndividual {
 		return (fitness == GOAL);
 	}
 	
-	public int charAt(int i, int j) {
-		return matrix[i][j];
+	public char charAt(int i, int j) {
+		return (char)(matrix[i][j]+'0');
 	}
 	
 }

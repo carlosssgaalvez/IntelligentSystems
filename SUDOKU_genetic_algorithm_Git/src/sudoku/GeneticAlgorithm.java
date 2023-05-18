@@ -8,6 +8,7 @@ public class GeneticAlgorithm {
 	
 	private List<SudokuPopulation> poblaciones;
 	private final int SIZE = 9;	
+	private final int CREATIONS = 2000;	
 	
 	public SudokuIndividual solvedOne;
 	
@@ -27,7 +28,7 @@ public class GeneticAlgorithm {
 		poblaciones.get(p).getTotalFitness();
 		poblaciones.get(p).showPopulation(p);
 		
-		while (isSolved(poblaciones.get(p)) == -1 && p < 150) {
+		while (isSolved(poblaciones.get(p)) == -1 && p < CREATIONS) {
 			for (int i = 0; i < populationSize; ++i) {
 				
 				int randomMode = rnd.nextInt(10); // probabilities
@@ -42,11 +43,11 @@ public class GeneticAlgorithm {
 				if (randomMode < 2) { // the individual remains the same
 					poblaciones.get(p+1).getPopulation().add(s0);
 					
-				} else if (randomMode >= 2 && randomMode < 4) { // mutation is applied to the individual
+				} else if (randomMode >= 2 && randomMode < 5) { // mutation is applied to the individual
 					SudokuIndividual nuevo = new SudokuIndividual(s, s0);
 					poblaciones.get(p+1).getPopulation().add(nuevo);
 					
-				} else if (randomMode >= 4) { // crossover is applied to the individual
+				} else if (randomMode >= 5) { // crossover is applied to the individual
 					SudokuIndividual s2 = eligeIndividual(p);
 					
 					int row;
@@ -84,13 +85,27 @@ public class GeneticAlgorithm {
 	
 		poblaciones.get(p).showPopulation(p);
 		int n = isSolved(poblaciones.get(p));
-		if (n != -1) {
+		if (n != -1) { // sudoku completely SOLVED
 			System.out.println("SOLUCION CORECTA:");
 			solvedOne = poblaciones.get(p).getPopulation().get(n);
 			solvedOne.printIndividual();
-		}		
+		} else { // sudoku partially solved -> BEST FITNESS found
+			solvedOne = getBiggerFitness(poblaciones.get(p));
+		}
 	}
 	
+	private SudokuIndividual getBiggerFitness(SudokuPopulation onePopulation) {
+		int bigger = onePopulation.getPopulation().get(0).getFitness();
+		int biggerIndex = 0;
+		for (int i = 1; i < onePopulation.getPopulationSize(); ++i) {
+			if (onePopulation.getPopulation().get(i).getFitness() > bigger) {
+				bigger = onePopulation.getPopulation().get(i).getFitness();
+				biggerIndex = i;
+			}
+		}
+		return onePopulation.getPopulation().get(biggerIndex);
+	}
+
 	private int isSolved(SudokuPopulation sp) {
 		boolean ok = false;
 		int cnt = 0;
@@ -122,5 +137,8 @@ public class GeneticAlgorithm {
 		return poblaciones.get(p).getPopulation().get(i);
 	}
 	
+	public SudokuIndividual getSolvedOne() {
+		return solvedOne;
+	}
 	
 }
